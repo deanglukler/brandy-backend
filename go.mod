@@ -1,3 +1,3 @@
-module brandy-backend
+module github.com/koyeb/example-golang
 
 go 1.21.2
