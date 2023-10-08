@@ -20,8 +20,6 @@ type Product struct {
     Location string `json:"location"`
 }
 
-var connStr = "postgresql://dean:pass4dean@database-1.cwj7xe0iqba4.us-east-1.rds.amazonaws.com/brandy-db"
-
 func main() {
 
     port := os.Getenv("PORT")
@@ -41,7 +39,7 @@ func main() {
 func getAllProducts(c echo.Context) error {
     log.Println("Getting all products...")
     
-
+    connStr := os.Getenv("CONNSTR")
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -78,6 +76,7 @@ func getAllProducts(c echo.Context) error {
 func searchProducts(c echo.Context) error {
     query := c.QueryParam("q")
 
+    connStr := os.Getenv("CONNSTR")
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)

@@ -1,19 +1,18 @@
-package main
+package seeder
 
 import (
 	"database/sql"
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
 )
 
-
-
-func main() {
-	connStr := "postgresql://dean:pass4dean@database-1.cwj7xe0iqba4.us-east-1.rds.amazonaws.com/brandy-db"
+func Seed() {
+	connStr := os.Getenv("CONNSTR")
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
