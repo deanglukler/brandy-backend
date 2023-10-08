@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/labstack/echo/v4"
@@ -22,12 +23,19 @@ type Product struct {
 var connStr = "postgresql://dean:pass4dean@database-1.cwj7xe0iqba4.us-east-1.rds.amazonaws.com/brandy-db"
 
 func main() {
+
+    port := os.Getenv("PORT")
+ 
+	if port == "" {
+		port = "8080"
+	}
+    
     e := echo.New()
 
     e.GET("/products", getAllProducts)
     e.GET("/products/search", searchProducts)
 
-    e.Logger.Fatal(e.Start(":8080"))
+    e.Logger.Fatal(e.Start(":" + port))
 }
 
 func getAllProducts(c echo.Context) error {
@@ -106,7 +114,9 @@ func searchProducts(c echo.Context) error {
         WHERE 
             %s
     `, whereClause)
+
     rows, err := db.Query(sqlQuery)
+
     if err != nil {
         log.Fatal(err)
         return err
