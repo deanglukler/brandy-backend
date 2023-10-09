@@ -18,6 +18,7 @@ type Product struct {
     ProductName string `json:"product_name"`
     Category string `json:"category"`
     Location string `json:"location"`
+    ImageURL string `json:"image_url"`
 }
 
 func main() {
@@ -53,7 +54,7 @@ func getAllProducts(c echo.Context) error {
 
     log.Println("Connected to database!")
 
-    rows, err := db.Query("SELECT id, brand_name, product_name, category, location FROM products")
+    rows, err := db.Query("SELECT id, brand_name, product_name, category, location, image_url FROM products")
     if err != nil {
         log.Fatal(err)
         return err
@@ -64,7 +65,7 @@ func getAllProducts(c echo.Context) error {
 
     for rows.Next() {
         var product Product
-        if err := rows.Scan(&product.ID, &product.BrandName, &product.ProductName, &product.Category, &product.Location); err != nil {
+        if err := rows.Scan(&product.ID, &product.BrandName, &product.ProductName, &product.Category, &product.Location, &product.ImageURL); err != nil {
             return err
         }
         products = append(products, product)
@@ -107,7 +108,8 @@ func searchProducts(c echo.Context) error {
             brand_name, 
             product_name, 
             category, 
-            location 
+            location,
+            image_url
         FROM 
             products 
         WHERE 
@@ -126,7 +128,7 @@ func searchProducts(c echo.Context) error {
 
     for rows.Next() {
         var product Product
-        if err := rows.Scan(&product.ID, &product.BrandName, &product.ProductName, &product.Category, &product.Location); err != nil {
+        if err := rows.Scan(&product.ID, &product.BrandName, &product.ProductName, &product.Category, &product.Location, &product.ImageURL); err != nil {
             return err
         }
         products = append(products, product)
