@@ -1,4 +1,4 @@
-package main
+package seeder
 
 import (
 	"database/sql"
@@ -11,7 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func main() {
+func Seed() {
 	connStr := os.Getenv("CONNSTR")
 
 	db, err := sql.Open("postgres", connStr)
